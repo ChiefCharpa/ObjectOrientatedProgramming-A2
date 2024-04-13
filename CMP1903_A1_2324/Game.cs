@@ -17,7 +17,12 @@ namespace CMP1903_A1_2324
          * EXTRA: For extra requirements (these aren't required though), the dice rolls could be managed so that the
          * rolls could be continous, and the totals and other statistics could be summarised for example.
          */
-        private int[] _storedRolls = { };
+        private List<int> _storedRolls = new List<int> { };
+
+        public List<int> rollNumbers
+        {
+            get { return _storedRolls; }
+        }
 
 
 
@@ -29,92 +34,10 @@ namespace CMP1903_A1_2324
        * and process the given array to calculate and outputs the mean and median
        */
 
-        public void Mean(int[] DiceRollArray, bool Testing = false)
-        {
-            // The function initially uses the sort function to arrange the values in acsending order
-            Array.Sort(DiceRollArray);
-            // The variables Total and Count are instantiated for later use
-            int Total = 0;
-            int Count = 0;
-            // It then iterates for each value in the array passing each given value to the vaiable DiceRoll
-            foreach (int DiceRoll in DiceRollArray)
-            {
-                // Adds the given value to The Total variable
-                Total += DiceRoll;
-                // Adds 1 to count
-                Count++;
-            }
-            // Calculates the mean by dividing the mean by the total
-            float Mean = Total / Count;
-            // Outputs the calculated mean in the console
-            Console.WriteLine($"The average mean of the dice is: {Mean}");
-            // Calculates the midpoint in the array and stores value in the variable midpoint 
-            int midpoint = Count / 2;
-            // Instantiates the variable median
-            int median;
-            // For if the midpoint is even or odd the middle most value is called
-            if (Count % 2 != 0)
-            {
-                median = DiceRollArray[midpoint];
-            }
-            else
-            {
-                median = DiceRollArray[midpoint - 1];
-            }
-            // Outputs the calculated median into the console window
-            Console.WriteLine($"The median of the dice is: {median}");
-            // if testing is true it validates to make sure that both mean and median are in an acceptable range
-            if (Testing)
-            {
-                Debug.Assert(median > 0 && median < 7);
-                Debug.Assert(Mean > 0 && Mean < 7);
-            }
-        }
 
-        /* Mode method takes 2 parameters (1 an array and one a bool variable) 
-         * and calculates the given mode for the array returning the mode from the method
-         */
-        public int Mode(int[] DiceRollArray, bool Testing = false)
-        {
-            // The method initially uses the sort function to arrange the values in acsending order
-            Array.Sort(DiceRollArray);
-            // Initiallises 2 variables mode and Most
-            int mode = 0;
-            int Most = 0;
-            // Iterates through the array storing the current value as j
-            foreach (int j in DiceRollArray)
-            {
-                // instantiatescount seting it to 0
-                int count = 0;
-                // iterates through the list storing the values as i
-                foreach (int i in DiceRollArray)
-                {
-                    // for each instance i and j are the same, increment count
-                    if (i == j)
-                    {
-                        count++;
-                        // if count exceeds most mode is set to the current value of j and sets Most to count
-                        if (count > Most)
-                        {
-                            mode = j;
-                            Most = count;
-                        }
-                    }
-                }
-            }
-            // if testing is set to true then it tests to ensure mode is in its acceptable range
-            if (Testing)
-            {
-                Debug.Assert(mode > 0 && mode < 7);
-            }
-            // returns the value of mode 
-            return mode;
 
-        }
 
-    
-
-    // Acts to rolls dice 3 at a time until the user stops the rolling
+        // Acts to rolls dice 3 at a time until the user stops the rolling
         public void RollingContinuous(bool val, bool testRun = false)
         {
             // Takes the first boolean parameter and whilst Val is true iterate the while loop
@@ -127,7 +50,7 @@ namespace CMP1903_A1_2324
                 // The stored variable is called and its value is stored in the DieRoll variable
                 int DieRoll = die1.rollNumber;
                 // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls = _storedRolls.Append(DieRoll).ToArray();
+                _storedRolls.Add(DieRoll);
                 // Outputs the current dice number with the dices curtrent value
                 Console.WriteLine();
                 Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
@@ -148,7 +71,7 @@ namespace CMP1903_A1_2324
                 // The stored variable is called and its value is stored in the DieRoll variable
                 DieRoll = die2.rollNumber;
                 // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls = _storedRolls.Append(DieRoll).ToArray();
+                _storedRolls.Add(DieRoll);
                 // Outputs the current dice number with the dices curtrent value
                 Console.WriteLine();
                 Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
@@ -159,7 +82,7 @@ namespace CMP1903_A1_2324
                 // The stored variable is called and its value is stored in the DieRoll variable
                 DieRoll = die3.rollNumber;
                 // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls = _storedRolls.Append(DieRoll).ToArray();
+                _storedRolls.Add(DieRoll);
                 // Outputs the current dice number with the dices curtrent value
                 Console.WriteLine();
                 Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
@@ -183,9 +106,9 @@ namespace CMP1903_A1_2324
                 else
                 {
                     // if not in test mode the method Mean is called passing the array of stored rolls as a parameter
-                    Mean(_storedRolls);
+                    Statistics.Mean(rollNumbers);
                     // The method mode is then called passing the stored array and outputting the result in the console window
-                    Console.WriteLine($"The current mode of the dice is: {Mode(_storedRolls)}");
+                    Console.WriteLine($"The current mode of the dice is: {Statistics.Mode(rollNumbers)}");
                     Console.WriteLine();
                     // An output is produced in the console asking if they want to roll 3 more dice
                     Console.WriteLine("Do you want to roll 3 more dice: X to quit");
@@ -213,6 +136,74 @@ namespace CMP1903_A1_2324
                     }
                 }
             }
+        }
+
+        static void SevenOut()
+        {
+            //Rolls 2 dice
+            Die die = new Die();
+
+            for (int i = 0; i<2;  i++)
+            {
+                die.Roll();
+                int DieRoll1 = die.rollNumber;
+            }
+            
+
+        }
+
+        static void Main(string[] args)
+        {
+            // initially initialises a boolean variable valid setting it to false
+            bool valid = false;
+            // Whilst the value is false iterate through the code
+            while (!valid)
+            {
+                // A string variable InputtedValue is instantiated as an empty string
+                string inputtedValue = "";
+                // An output is produced in the console window asking if the user wants to run a test
+                Console.WriteLine("Do you want to run the test: Y or N");
+                // Try is used to ensure the user inputs a valid input and prevents any possible crashes
+                try
+                {
+                    // The users input is taken and is attempted to be stored as a string in InputtedValue
+                    inputtedValue = Console.ReadLine();
+                    // Sets the given input to uppercase
+                    inputtedValue = inputtedValue.ToUpper();
+                    // The input is compared with the two valid answers and if it does valid is set to true
+                    if (inputtedValue == "Y" || inputtedValue == "N")
+                    {
+                        valid = true;
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+                // If an error is produced in try no code will be executed repeating the while loop
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Invalid input, must be a character and be Y or X.");
+                }
+
+                // if the input was valid then the input is compared otherwise the code skips to the start of the while loop
+                if (valid)
+                {
+                    // Compares the players input and if the value matches run the nested code
+                    if (inputtedValue == "Y")
+                    {
+                        // Instaniates an object of the class testing
+                        Testing testing = new Testing();
+                        // the testing method test code is called
+                        testing.TestCode();
+                    }
+                    // Create a Game object and call the RollingContinous method
+                    Game game = new Game();
+                    game.RollingContinuous(true);
+                }
+            }
+
+
         }
 
     }

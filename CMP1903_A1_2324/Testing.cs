@@ -56,9 +56,9 @@ namespace CMP1903_A1_2324
 
             // Creates an instance of Statistics class
             // calls the Mean method passing a bool to run the testing code
-            game.Mean(testingRolls,true);
+            Statistics.Mean(testingRolls,true);
             // Calls and prints the Mode method along with passing booln variable to call the testing code
-            Console.WriteLine($"The current mode of the dice is: {game.Mode(testingRolls, true)}");
+            Console.WriteLine($"The current mode of the dice is: {Statistics.Mode(testingRolls, true)}");
 
             // outputs completed to tell user that that the given values produce the correct mean mode and median
             Console.WriteLine("Completed");
