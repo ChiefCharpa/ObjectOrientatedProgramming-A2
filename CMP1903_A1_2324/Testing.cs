@@ -52,7 +52,7 @@ namespace CMP1903_A1_2324
             // Tests to ensure that the statistical functions calculate the expected outputs for the known array
             Console.WriteLine("Statistic Test");
             // Test array so we can determine that the logic works correctly
-            int[] testingRolls = { 1, 2, 2, 2, 3, 4, 6, 6 };
+            List<int> testingRolls = new List<int> { 1, 2, 2, 2, 3, 4, 6, 6 };
 
             // Creates an instance of Statistics class
             // calls the Mean method passing a bool to run the testing code
