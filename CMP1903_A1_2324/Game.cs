@@ -138,50 +138,7 @@ namespace CMP1903_A1_2324
             }
         }
 
-        public int SevenOut(bool player)
-        {
-            _storedRolls = new List<int> { };
-            //Rolls 2 dice
-            Die die = new Die();
-            int dieTotal = 0;
-            bool gameStop = false;
-            int counter = 0;
-            while (!gameStop)
-            {
-                Console.WriteLine("Roll the dice");
-                Console.ReadLine();
-                die.Roll();
-                counter++;
-                int DieRoll1 = die.rollNumber;
-                die.Roll();
-                int DieRoll2 = die.rollNumber;
-
-                Console.WriteLine($"Die pair {counter} rolled {DieRoll1} and {DieRoll2}");
-
-                if (DieRoll1 + DieRoll2 != 7)
-                {
-                    _storedRolls.Add(DieRoll1);
-                    _storedRolls.Add(DieRoll2);
-                    if (DieRoll1 == DieRoll2)
-                    {
-                        dieTotal = dieTotal + 2 * (DieRoll1 + DieRoll2);
-                    }
-                    else
-                    {
-                        dieTotal = dieTotal + (DieRoll1 + DieRoll2);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("The pair totalled to be 7.");
-                    Console.WriteLine($"You scored a total of {dieTotal}");
-                    break;
-                }
-                return dieTotal;
-            }
-            
-
-        }
+        
 
         static void Main(string[] args)
         {
