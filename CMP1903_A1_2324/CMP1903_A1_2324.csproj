@@ -49,8 +49,10 @@
     <Compile Include="Die.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SevenOut.cs" />
     <Compile Include="Statistics.cs" />
     <Compile Include="Testing.cs" />
+    <Compile Include="ThreeOrMore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
