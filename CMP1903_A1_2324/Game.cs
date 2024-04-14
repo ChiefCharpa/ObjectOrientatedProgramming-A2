@@ -17,15 +17,35 @@ namespace CMP1903_A1_2324
          * EXTRA: For extra requirements (these aren't required though), the dice rolls could be managed so that the
          * rolls could be continous, and the totals and other statistics could be summarised for example.
          */
-        private List<int> _storedRolls = new List<int> { };
 
-        public List<int> rollNumbers
+        private static void MenuOutput()
         {
-            get { return _storedRolls; }
+            Console.WriteLine("1. to play SevenOut");
+            Console.WriteLine("2. to play ThreeOrMore");
+            Console.WriteLine("3. to view that stored statistics for the games");
+            Console.WriteLine("4. to run the testing class");
+            Console.WriteLine("x. to end application");
         }
 
+        private static void ComputerOrPlayer() 
+        { 
+            bool invalid = true;
+            while (invalid)
+            {
+                Console.WriteLine("1. to play against a player");
+                Console.WriteLine("2. to play against the computer");
+                string playerInput = Console.ReadLine();
+                if (playerInput == "1" || playerInput == "2")
+                {
+                    invalid = false;
+                }
+                else
+                {
+                    Console.WriteLine("Input was invalid");
+                }
+            }
 
-
+        }
 
         //Methods
 
@@ -38,111 +58,52 @@ namespace CMP1903_A1_2324
 
 
         // Acts to rolls dice 3 at a time until the user stops the rolling
-        public void RollingContinuous(bool val, bool testRun = false)
-        {
-            // Takes the first boolean parameter and whilst Val is true iterate the while loop
-            while (val == true)
-            {
-                // Creates instance of the die class
-                Die die1 = new Die();
-                // calls the roll method Roll for the Die class for the instance
-                die1.Roll();
-                // The stored variable is called and its value is stored in the DieRoll variable
-                int DieRoll = die1.rollNumber;
-                // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls.Add(DieRoll);
-                // Outputs the current dice number with the dices curtrent value
-                Console.WriteLine();
-                Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
-                /*
-                    for (int i = 0; i < 3; i++) 
-                    {
-                        die.Roll();
-                        int DieRoll = die.RollNumber;
-                        storedRolls = storedRolls.Append(DieRoll).ToArray();
-                        Console.WriteLine();
-                        Console.WriteLine($"Dice {storedRolls.Count()} rolled a {DieRoll}");
-                    }
-                */
-                // Creates instance of the die class
-                Die die2 = new Die();
-                // calls the roll method Roll for the Die class for the instance
-                die2.Roll();
-                // The stored variable is called and its value is stored in the DieRoll variable
-                DieRoll = die2.rollNumber;
-                // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls.Add(DieRoll);
-                // Outputs the current dice number with the dices curtrent value
-                Console.WriteLine();
-                Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
-                // Creates instance of the die class
-                Die die3 = new Die();
-                // calls the roll method Roll for the Die class for the instance
-                die3.Roll();
-                // The stored variable is called and its value is stored in the DieRoll variable
-                DieRoll = die3.rollNumber;
-                // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls.Add(DieRoll);
-                // Outputs the current dice number with the dices curtrent value
-                Console.WriteLine();
-                Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
-
-                // instantiates a variable to store the total of the dice
-                int Total = 0;
-                // iterates through the list adding each roll stored to the total variable
-                foreach (int previousRoll in _storedRolls)
-                {
-                    Total = Total + previousRoll;
-                }
-                // Ouputs the total of the dice in the command console
-                Console.WriteLine();
-                Console.WriteLine($"The current total of the dice is: {Total}");
-                Console.WriteLine();
-                // checks to see if the method is being called in test mode and setting the loop to end accordingly
-                if (testRun)
-                {
-                    val = false;
-                }
-                else
-                {
-                    // if not in test mode the method Mean is called passing the array of stored rolls as a parameter
-                    Statistics.Mean(rollNumbers);
-                    // The method mode is then called passing the stored array and outputting the result in the console window
-                    Console.WriteLine($"The current mode of the dice is: {Statistics.Mode(rollNumbers)}");
-                    Console.WriteLine();
-                    // An output is produced in the console asking if they want to roll 3 more dice
-                    Console.WriteLine("Do you want to roll 3 more dice: X to quit");
-                    //try is then used to ensure no errors are produced by the users input
-                    try
-                    {
-                        // The console reads the users input and attempts to store the value as a string  in InputtedValue
-                        string InputtedValue = Console.ReadLine();
-                        // If the inputed value is an x Val is set to false ending the while loop 
-                        if (InputtedValue == "x" || InputtedValue == "X")
-                        {
-                            val = false;
-                            // A final message is produced in the command window to signify the end of the program
-                            Console.WriteLine("Program end.");
-                        }
-                        else
-                        {
-                            throw new Exception();
-                        }
-                    //if inputted value was invalid or not x the program will roll 3 more dice
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("X has not been inputted, rolling 3 more dice. ");
-                    }
-                }
-            }
-        }
+           
+        
 
         
 
         static void Main(string[] args)
         {
-            SevenOut game = new SevenOut();
+            bool end = false;
+            while (end != true)
+            {
+                MenuOutput();
+                string val = Console.ReadLine();
+                if (val != null)
+                {
+                    if (val == "1")
+                    {
+                        SevenOut game = new SevenOut();
+
+                    }
+                    else if (val == "2")
+                    {
+
+                    }
+                    else if (val == "3")
+                    {
+
+                    }
+                    else if(val == "4")
+                    {
+
+                    }
+                    else if (val == "x")
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+            }
+
+
+
+
             game.SevenOutGame(false);
 
 
