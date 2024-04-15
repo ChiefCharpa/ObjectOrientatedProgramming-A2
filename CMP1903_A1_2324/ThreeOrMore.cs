@@ -10,6 +10,8 @@ namespace CMP1903_A1_2324
 {
     internal class ThreeOrMore
     {
+        int[] _rolledDice = {0,0,0,0,0};
+
         /*Three or More
         5 x dice
         Rules:
@@ -24,12 +26,19 @@ namespace CMP1903_A1_2324
 
         public int ThreeOrMore2Player()
         {
+           Die die = new Die();
+           for(int i = 0; i < 5; i++)
+           {
+                die.Roll();
+                int currentRoll = die.rollNumber;
+                _rolledDice[i] = currentRoll;
+           }
 
         }
 
         public int ThreeOrMore1Player()
         {
-
+            return 2;
         }
     }
 }

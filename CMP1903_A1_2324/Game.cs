@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,14 +28,15 @@ namespace CMP1903_A1_2324
             Console.WriteLine("x. to end application");
         }
 
-        private static void ComputerOrPlayer() 
+        private static string ComputerOrPlayer() 
         { 
             bool invalid = true;
+            string playerInput = "";
             while (invalid)
             {
                 Console.WriteLine("1. to play against a player");
                 Console.WriteLine("2. to play against the computer");
-                string playerInput = Console.ReadLine();
+                playerInput = Console.ReadLine();
                 if (playerInput == "1" || playerInput == "2")
                 {
                     invalid = false;
@@ -44,7 +46,7 @@ namespace CMP1903_A1_2324
                     Console.WriteLine("Input was invalid");
                 }
             }
-
+            return playerInput;
         }
 
         //Methods
@@ -75,6 +77,51 @@ namespace CMP1903_A1_2324
                     if (val == "1")
                     {
                         SevenOut game = new SevenOut();
+                        string choice = ComputerOrPlayer();
+                        if (choice == "1")
+                        {
+                            Console.WriteLine("Enter first players name.");
+                            string player1 = Console.ReadLine();
+                            Console.WriteLine("Enter second players name.");
+                            string player2 = Console.ReadLine();
+                            Console.WriteLine($"{player1}'s Turn. ");
+                            int player1Score = game.SevenOutGame(true);
+                            Console.WriteLine($"{player2}'s Turn. ");
+                            int player2Score = game.SevenOutGame(true);
+                            if(player1Score > player2Score)
+                            {
+                                Console.WriteLine($"{player1} wins. ");
+                            }
+                            else if(player2Score > player1Score)
+                            {
+                                Console.WriteLine($"{player2} wins. ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Draw. ");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter player's name.");
+                            string player1 = Console.ReadLine();
+                            Console.WriteLine($"{player1}'s Turn. ");
+                            int player1Score = game.SevenOutGame(true);
+                            Console.WriteLine($"computer's Turn. ");
+                            int player2Score = game.SevenOutGame(false);
+                            if (player1Score > player2Score)
+                            {
+                                Console.WriteLine($"{player1} wins. ");
+                            }
+                            else if (player2Score > player1Score)
+                            {
+                                Console.WriteLine($"Computer wins. ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Draw. ");
+                            }
+                        }
 
                     }
                     else if (val == "2")
@@ -91,20 +138,16 @@ namespace CMP1903_A1_2324
                     }
                     else if (val == "x")
                     {
-
+                        end = true;
                     }
                     else
                     {
-
+                        Console.WriteLine("Invalid input. ");
                     }
 
                 }
             }
 
-
-
-
-            game.SevenOutGame(false);
 
 
         }

@@ -66,6 +66,7 @@ namespace CMP1903_A1_2324
                 }
                 else
                 {
+                    gameStop = true;
                     Console.WriteLine("The pair totalled to be 7.");
                     Console.WriteLine($"You scored a total of {dieTotal}");
                 }
