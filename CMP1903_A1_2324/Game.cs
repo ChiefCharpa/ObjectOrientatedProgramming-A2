@@ -129,10 +129,12 @@ namespace CMP1903_A1_2324
                         string choice = ComputerOrPlayer();
                         if (choice == "1")
                         {
+                            ThreeOrMore game = new ThreeOrMore();
                             Console.WriteLine("Enter first players name.");
                             string player1 = Console.ReadLine();
                             Console.WriteLine("Enter second players name.");
                             string player2 = Console.ReadLine();
+                            int[] outcome = game.ThreeOrMoreGame();
                         }
                         else
                         {

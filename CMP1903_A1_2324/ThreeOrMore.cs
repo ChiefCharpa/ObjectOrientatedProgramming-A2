@@ -42,8 +42,6 @@ namespace CMP1903_A1_2324
 
         private static int PointAmounts(int dieNumber ,int points)
         {
-            if (dieNumber > 2)
-            {
                 if (dieNumber > 3)
                 {
                     if (dieNumber > 4)
@@ -51,20 +49,18 @@ namespace CMP1903_A1_2324
                         Console.WriteLine("5 of a kind. ");
                         points = points + 12;
                     }
-
+                    else
+                    {
+                        Console.WriteLine("4 of a kind. ");
+                        points = points + 6;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("4 of a kind. ");
-                    points = points + 6;
+                    Console.WriteLine("3 of a kind. ");
+                    points = points + 3;
                 }
-            }
-            else
-            {
-                Console.WriteLine("3 of a kind. ");
-                points = points + 3;
-            }
-            return points;
+                return points;
         }
 
 
@@ -148,7 +144,7 @@ namespace CMP1903_A1_2324
                     endOfGame = true;
                 }
                 player2Points = player2.ThreeOrMore1Player(player2Points,true);
-                if (player2Points >= 20 || player1Points <=20)
+                if (player2Points >= 20 || player1Points >=20)
                 {
                     player1Win = true;
                     player2Win = true;
@@ -206,11 +202,11 @@ namespace CMP1903_A1_2324
                         validRoll = true;
                         break;
                     }
-                }
-                else
-                {
-                    currentDuplicate = j;
-                    reRoll = true;
+                    else
+                    {
+                        currentDuplicate = j;
+                        reRoll = true;
+                    }
                 }
             }
             if ( reRoll && !validRoll)
