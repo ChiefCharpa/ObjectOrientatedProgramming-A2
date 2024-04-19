@@ -126,6 +126,19 @@ namespace CMP1903_A1_2324
                     }
                     else if (val == "2")
                     {
+                        string choice = ComputerOrPlayer();
+                        if (choice == "1")
+                        {
+                            Console.WriteLine("Enter first players name.");
+                            string player1 = Console.ReadLine();
+                            Console.WriteLine("Enter second players name.");
+                            string player2 = Console.ReadLine();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter first players name.");
+                            string player1 = Console.ReadLine();
+                        }
 
                     }
                     else if (val == "3")
