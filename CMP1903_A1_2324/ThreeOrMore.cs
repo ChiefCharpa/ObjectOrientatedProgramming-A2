@@ -68,8 +68,9 @@ namespace CMP1903_A1_2324
         }
 
 
-        private static int reRollDie(int points , int currentValue)
+        private int reRollDie(int points , int currentValue)
         {
+            int[] diceAmount = { 0, 0, 0, 0, 0, 0 };
             Die die = new Die();
             bool invalid = true;
             string playerChoice = "";
@@ -86,19 +87,31 @@ namespace CMP1903_A1_2324
             }
             if (playerChoice == "1")
             {
-
+                Console.WriteLine("Rerolling the 3 dice. ");
+                _rolledDice[0] = currentValue;
+                _rolledDice[1] = currentValue;
+                for (int i = 0; i < 3; i++)
+                {
+                    die.Roll();
+                    int currentRoll = die.rollNumber;
+                    _rolledDice[i + 2] = currentRoll;
+                    Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
+                }
             }
-
-
-
-
-            for (int i = 0; i < 5; i++)
+            else
             {
-                die.Roll();
-                int currentRoll = die.rollNumber;
-                _rolledDice[i] = currentRoll;
-                Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
+                Roll5Die();
             }
+            diceAmount = ComparisonCheck(_rolledDice);
+            for (int j = 0; j < diceAmount.Length; j++)
+            {
+                if (diceAmount[j] > 2)
+                {
+                    points = PointAmounts(diceAmount[j], points);
+                }
+            }
+
+            return points;
         }
 
         private void Roll5Die()
@@ -115,9 +128,59 @@ namespace CMP1903_A1_2324
 
         
 
-        public int ThreeOrMoreGame()
+        public int[] ThreeOrMoreGame()
         {
-            
+            int[] playerScore = { 0, 0 };
+            bool endOfGame = false;
+
+            ThreeOrMore player1 = new ThreeOrMore();
+            ThreeOrMore player2 = new ThreeOrMore();
+            bool player1Win = false;
+            bool player2Win = false;
+            int player1Points = 0; 
+            int player2Points = 0;
+            while (!endOfGame)
+            {
+                player1Points = player1.ThreeOrMore1Player(player1Points,true);
+                if (player1Points >= 20)
+                {
+                    player1Win = true;
+                    endOfGame = true;
+                }
+                player2Points = player2.ThreeOrMore1Player(player2Points,true);
+                if (player2Points >= 20 || player1Points <=20)
+                {
+                    player1Win = true;
+                    player2Win = true;
+                    endOfGame = true;
+                }
+                if (player2Points >= 20)
+                {
+                    player2Win = true;
+                    endOfGame = true;
+                }
+                if (player1Points >= 20)
+                {
+                    player1Win = true;
+                    endOfGame = true;
+                }
+            }
+            if (player1Win && player2Win)
+            {
+                playerScore[0] = 0;
+                playerScore[1] = player1Points;
+            }
+            else if (player1Win)
+            {
+                playerScore[0] = 1;
+                playerScore[1] = player1Points;
+            }
+            else
+            {
+                playerScore[0] = 2;
+                playerScore[1] = player2Points;
+            }
+            return playerScore;
         }
 
         public int ThreeOrMore1Player(int points , bool player = false)
@@ -131,6 +194,7 @@ namespace CMP1903_A1_2324
             Roll5Die();
             int[] diceAmount = ComparisonCheck(_rolledDice);
             bool reRoll = false;
+            bool validRoll = false;
             int currentDuplicate = 0;
             for (int j = 0; j < diceAmount.Length; j++)
             {
@@ -139,6 +203,7 @@ namespace CMP1903_A1_2324
                     if (diceAmount[j] > 2)
                     {
                         points = PointAmounts(diceAmount[j],points);
+                        validRoll = true;
                         break;
                     }
                 }
@@ -148,10 +213,11 @@ namespace CMP1903_A1_2324
                     reRoll = true;
                 }
             }
-            if ( reRoll )
+            if ( reRoll && !validRoll)
             {
-                
+                points = reRollDie(points, currentDuplicate + 1);
             }
+            return points;
         }
     }
 }
