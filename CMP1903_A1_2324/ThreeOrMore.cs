@@ -168,7 +168,8 @@ namespace CMP1903_A1_2324
                     Console.WriteLine($"The computer has {player2Points}. ");;
                     player2Points = player2.ThreeOrMore1Player(player2Points, false);
                 }
-                if (player2Points >= 20 && player1Points >=20)
+                if (player2Points >= 20 &&
+                    player1Points >=20)
                 {
                     player1Win = true;
                     player2Win = true;
