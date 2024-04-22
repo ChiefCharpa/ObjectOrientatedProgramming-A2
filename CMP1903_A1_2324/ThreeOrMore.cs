@@ -64,13 +64,13 @@ namespace CMP1903_A1_2324
         }
 
 
-        private int reRollDie(int points , int currentValue)
+        private int reRollDie(int points , int currentValue, bool player)
         {
             int[] diceAmount = { 0, 0, 0, 0, 0, 0 };
             Die die = new Die();
             bool invalid = true;
             string playerChoice = "";
-            while (invalid)
+            while (invalid && player)
             {
                 Console.WriteLine ("You have rolled a pair so can reroll");
                 Console.WriteLine ("1. to reroll the 3 nonmatching dice. ");
@@ -81,7 +81,7 @@ namespace CMP1903_A1_2324
                     invalid = false;
                 }
             }
-            if (playerChoice == "1")
+            if (!player)
             {
                 Console.WriteLine("Rerolling the 3 dice. ");
                 _rolledDice[0] = currentValue;
@@ -96,7 +96,23 @@ namespace CMP1903_A1_2324
             }
             else
             {
-                Roll5Die();
+                if (playerChoice == "1")
+                {
+                    Console.WriteLine("Rerolling the 3 dice. ");
+                    _rolledDice[0] = currentValue;
+                    _rolledDice[1] = currentValue;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        die.Roll();
+                        int currentRoll = die.rollNumber;
+                        _rolledDice[i + 2] = currentRoll;
+                        Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
+                    }
+                }
+                else
+                {
+                    Roll5Die();
+                }
             }
             diceAmount = ComparisonCheck(_rolledDice);
             for (int j = 0; j < diceAmount.Length; j++)
@@ -124,7 +140,7 @@ namespace CMP1903_A1_2324
 
         
 
-        public int[] ThreeOrMoreGame()
+        public int[] ThreeOrMoreGame(bool player = false)
         {
             int[] playerScore = { 0, 0 };
             bool endOfGame = false;
@@ -137,14 +153,22 @@ namespace CMP1903_A1_2324
             int player2Points = 0;
             while (!endOfGame)
             {
+                Console.WriteLine("Player 1. ");
+                Console.WriteLine($"You have {player1Points}. ");
                 player1Points = player1.ThreeOrMore1Player(player1Points,true);
-                if (player1Points >= 20)
+                if (player)
                 {
-                    player1Win = true;
-                    endOfGame = true;
+                    Console.WriteLine("Player 2. ");
+                    Console.WriteLine($"You have {player2Points}. ");
+                    player2Points = player2.ThreeOrMore1Player(player2Points, true);
                 }
-                player2Points = player2.ThreeOrMore1Player(player2Points,true);
-                if (player2Points >= 20 || player1Points >=20)
+                else
+                {
+                    Console.WriteLine("Computer. ");
+                    Console.WriteLine($"The computer has {player2Points}. ");;
+                    player2Points = player2.ThreeOrMore1Player(player2Points, false);
+                }
+                if (player2Points >= 20 && player1Points >=20)
                 {
                     player1Win = true;
                     player2Win = true;
@@ -211,7 +235,14 @@ namespace CMP1903_A1_2324
             }
             if ( reRoll && !validRoll)
             {
-                points = reRollDie(points, currentDuplicate + 1);
+                if(player == true)
+                {
+                    points = reRollDie(points, currentDuplicate + 1, true);
+                }
+                else
+                {
+                    points = reRollDie(points, currentDuplicate + 1, false);
+                }
             }
             return points;
         }

@@ -21,6 +21,8 @@ namespace CMP1903_A1_2324
 
         private static void MenuOutput()
         {
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("1. to play SevenOut");
             Console.WriteLine("2. to play ThreeOrMore");
             Console.WriteLine("3. to view that stored statistics for the games");
@@ -49,17 +51,21 @@ namespace CMP1903_A1_2324
             return playerInput;
         }
 
-        //Methods
-
-
-        /* Mean method which can take 2 parameters (1 array and one possible bool),
-       * and process the given array to calculate and outputs the mean and median
-       */
-
-
-
-
-        // Acts to rolls dice 3 at a time until the user stops the rolling
+        private static void playerWin(int[] score, string player1Name, string player2Name = "Computer")
+        {
+            if (score[0] == 0)
+            {
+                Console.WriteLine("The game was a draw. ");
+            }
+            else if(score[0] == 1) 
+            {
+                Console.WriteLine($"{player1Name} has won. ");
+            }
+            else
+            {
+                Console.WriteLine($"{player2Name} has won. ");
+            }
+        }
            
         
 
@@ -127,19 +133,22 @@ namespace CMP1903_A1_2324
                     else if (val == "2")
                     {
                         string choice = ComputerOrPlayer();
+                        ThreeOrMore game = new ThreeOrMore();
                         if (choice == "1")
                         {
-                            ThreeOrMore game = new ThreeOrMore();
                             Console.WriteLine("Enter first players name.");
                             string player1 = Console.ReadLine();
                             Console.WriteLine("Enter second players name.");
                             string player2 = Console.ReadLine();
-                            int[] outcome = game.ThreeOrMoreGame();
+                            int[] outcome = game.ThreeOrMoreGame(true);
+                            playerWin(outcome, player1, player2);
                         }
                         else
                         {
                             Console.WriteLine("Enter first players name.");
                             string player1 = Console.ReadLine();
+                            int[] outcome = game.ThreeOrMoreGame(false);
+                            playerWin(outcome, player1);
                         }
 
                     }
