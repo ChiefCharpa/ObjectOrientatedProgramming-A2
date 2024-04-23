@@ -40,7 +40,7 @@ namespace CMP1903_A1_2324
             return placementArray;
         }
 
-        private static int PointAmounts(int dieNumber ,int points)
+        protected static int PointAmounts(int dieNumber ,int points)
         {
                 if (dieNumber > 3)
                 {

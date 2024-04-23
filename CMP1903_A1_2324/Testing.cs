@@ -20,7 +20,8 @@ namespace CMP1903_A1_2324
         //Method
         public void TestCode()
         {
-
+            ThreeOrMore game = new ThreeOrMore();
+            game.PointTotal();
             
             
         }
