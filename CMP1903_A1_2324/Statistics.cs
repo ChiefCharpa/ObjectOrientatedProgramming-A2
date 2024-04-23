@@ -12,7 +12,7 @@ namespace CMP1903_A1_2324
         private int _Highscore = 0;
         private string _TopPlayer = "";
         private int _ComputerWins = 0;
-        private int _ = 0;
+        private int _GamesRan = 0;
 
         public int Highscore 
         { 
@@ -29,9 +29,21 @@ namespace CMP1903_A1_2324
         public int ComputerWins
         {
             get { return _ComputerWins; }
-            set { _ComputerWins = _ComputerWins + 1; }
+            set { _ComputerWins = value; }
         }
     
         public int GamesRan
+        {
+            get { return _GamesRan; }
+            set { _GamesRan = value; }
+        }
+
+        public void DisplayStats()
+        {
+            Console.WriteLine("Statistics:");
+            Console.WriteLine($"The current Highscore holder on Seven Out is {TopPlayer} with {Highscore}.");
+            Console.WriteLine($"The total amount of computer wins is {ComputerWins}.");
+            Console.WriteLine($"A total of {GamesRan} games have been ran");
+        }
     }
 }

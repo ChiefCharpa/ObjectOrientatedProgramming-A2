@@ -148,6 +148,7 @@ namespace CMP1903_A1_2324
                             Console.WriteLine("Enter first players name.");
                             string player1 = Console.ReadLine();
                             int[] outcome = game.ThreeOrMoreGame(false);
+                            Statistics.GamesRan = 
                             playerWin(outcome, player1);
                         }
 
