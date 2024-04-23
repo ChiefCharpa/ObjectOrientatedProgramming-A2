@@ -73,6 +73,7 @@ namespace CMP1903_A1_2324
 
         static void Main(string[] args)
         {
+            Statistics stats = new Statistics();
             bool end = false;
             while (end != true)
             {
@@ -97,15 +98,26 @@ namespace CMP1903_A1_2324
                             if(player1Score > player2Score)
                             {
                                 Console.WriteLine($"{player1} wins. ");
+                                if (player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
                             }
                             else if(player2Score > player1Score)
                             {
                                 Console.WriteLine($"{player2} wins. ");
+                                if (player2Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player2Score;
+                                    stats.TopPlayer = player2;
+                                }
                             }
                             else
                             {
                                 Console.WriteLine("Draw. ");
                             }
+                            stats.GamesRan = stats.GamesRan + 1;
                         }
                         else
                         {
@@ -118,15 +130,32 @@ namespace CMP1903_A1_2324
                             if (player1Score > player2Score)
                             {
                                 Console.WriteLine($"{player1} wins. ");
+                                if(player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
                             }
                             else if (player2Score > player1Score)
                             {
                                 Console.WriteLine($"Computer wins. ");
+                                stats.ComputerWins = stats.ComputerWins + 1;
+                                if (player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
                             }
                             else
                             {
                                 Console.WriteLine("Draw. ");
+                                if (player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
                             }
+                            stats.GamesRan = stats.GamesRan + 1;
                         }
 
                     }
@@ -141,6 +170,7 @@ namespace CMP1903_A1_2324
                             Console.WriteLine("Enter second players name.");
                             string player2 = Console.ReadLine();
                             int[] outcome = game.ThreeOrMoreGame(true);
+                            stats.GamesRan = stats.GamesRan + 1;
                             playerWin(outcome, player1, player2);
                         }
                         else
@@ -148,14 +178,14 @@ namespace CMP1903_A1_2324
                             Console.WriteLine("Enter first players name.");
                             string player1 = Console.ReadLine();
                             int[] outcome = game.ThreeOrMoreGame(false);
-                            Statistics.GamesRan = 
+                            stats.GamesRan = stats.GamesRan + 1;
                             playerWin(outcome, player1);
                         }
 
                     }
                     else if (val == "3")
                     {
-
+                        stats.DisplayStats();
                     }
                     else if(val == "4")
                     {
