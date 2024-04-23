@@ -12,6 +12,7 @@ namespace CMP1903_A1_2324
         private int _Highscore = 0;
         private string _TopPlayer = "";
         private int _ComputerWins = 0;
+        private int _ = 0;
 
         public int Highscore 
         { 
@@ -21,7 +22,7 @@ namespace CMP1903_A1_2324
 
         public string TopPlayer
         {
-            get { return TopPlayer; }
+            get { return _TopPlayer; }
             set { _TopPlayer = value; }
         }
 
@@ -31,6 +32,6 @@ namespace CMP1903_A1_2324
             set { _ComputerWins = _ComputerWins + 1; }
         }
     
-
+        public int GamesRan
     }
 }

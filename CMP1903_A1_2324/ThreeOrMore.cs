@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
 {
-    internal class ThreeOrMore
+    internal class ThreeOrMore : Die
     {
         int[] _rolledDice = {0,0,0,0,0};
 
@@ -67,7 +67,6 @@ namespace CMP1903_A1_2324
         private int reRollDie(int points , int currentValue, bool player)
         {
             int[] diceAmount = { 0, 0, 0, 0, 0, 0 };
-            Die die = new Die();
             bool invalid = true;
             string playerChoice = "";
             while (invalid && player)
@@ -88,8 +87,8 @@ namespace CMP1903_A1_2324
                 _rolledDice[1] = currentValue;
                 for (int i = 0; i < 3; i++)
                 {
-                    die.Roll();
-                    int currentRoll = die.rollNumber;
+                    Roll();
+                    int currentRoll = rollNumber;
                     _rolledDice[i + 2] = currentRoll;
                     Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
                 }
@@ -103,8 +102,8 @@ namespace CMP1903_A1_2324
                     _rolledDice[1] = currentValue;
                     for (int i = 0; i < 3; i++)
                     {
-                        die.Roll();
-                        int currentRoll = die.rollNumber;
+                        Roll();
+                        int currentRoll = rollNumber;
                         _rolledDice[i + 2] = currentRoll;
                         Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
                     }
@@ -128,11 +127,10 @@ namespace CMP1903_A1_2324
 
         private void Roll5Die()
         {
-            Die die = new Die();
             for (int i = 0; i < 5; i++)
             {
-                die.Roll();
-                int currentRoll = die.rollNumber;
+                Roll();
+                int currentRoll = rollNumber;
                 _rolledDice[i] = currentRoll;
                 Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
             }
@@ -151,22 +149,27 @@ namespace CMP1903_A1_2324
             bool player2Win = false;
             int player1Points = 0; 
             int player2Points = 0;
+            int player1RoundNumber = 0;
+            int player2RoundNumber = 0;
             while (!endOfGame)
             {
                 Console.WriteLine("Player 1. ");
                 Console.WriteLine($"You have {player1Points}. ");
                 player1Points = player1.ThreeOrMore1Player(player1Points,true);
+                player1RoundNumber++;
                 if (player)
                 {
                     Console.WriteLine("Player 2. ");
                     Console.WriteLine($"You have {player2Points}. ");
                     player2Points = player2.ThreeOrMore1Player(player2Points, true);
+                    player2RoundNumber++;
                 }
                 else
                 {
                     Console.WriteLine("Computer. ");
                     Console.WriteLine($"The computer has {player2Points}. ");;
                     player2Points = player2.ThreeOrMore1Player(player2Points, false);
+                    player2RoundNumber++;
                 }
                 if (player2Points >= 20 &&
                     player1Points >=20)
@@ -189,24 +192,23 @@ namespace CMP1903_A1_2324
             if (player1Win && player2Win)
             {
                 playerScore[0] = 0;
-                playerScore[1] = player1Points;
+                playerScore[1] = player1RoundNumber;
             }
             else if (player1Win)
             {
                 playerScore[0] = 1;
-                playerScore[1] = player1Points;
+                playerScore[1] = player1RoundNumber;
             }
             else
             {
                 playerScore[0] = 2;
-                playerScore[1] = player2Points;
+                playerScore[1] = player2RoundNumber;
             }
             return playerScore;
         }
 
         public int ThreeOrMore1Player(int points , bool player = false)
         {
-            Die die = new Die();
             if (player)
             {
                 Console.WriteLine("Roll 5 dice");

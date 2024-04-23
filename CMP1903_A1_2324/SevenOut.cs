@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
 {
-    internal class SevenOut
+    internal class SevenOut : Die
     {
 
         private List<int> _storedRolls = new List<int> { };
@@ -32,7 +32,6 @@ namespace CMP1903_A1_2324
         {
             rollNumbers = new List<int> { };
             //Rolls 2 dice
-            Die die = new Die();
             int dieTotal = 0;
             bool gameStop = false;
             int counter = 0;
@@ -43,11 +42,11 @@ namespace CMP1903_A1_2324
                     Console.WriteLine("Roll the dice");
                     Console.ReadLine();
                 }
-                die.Roll();
+                Roll();
                 counter++;
-                int DieRoll1 = die.rollNumber;
-                die.Roll();
-                int DieRoll2 = die.rollNumber;
+                int DieRoll1 = rollNumber;
+                Roll();
+                int DieRoll2 = rollNumber;
 
                 Console.WriteLine($"Die pair {counter} rolled {DieRoll1} and {DieRoll2}");
 
