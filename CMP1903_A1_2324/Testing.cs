@@ -18,10 +18,12 @@ namespace CMP1903_A1_2324
          */
 
         //Method
-        public void TestCode()
+        public static void TestCode()
         {
-            ThreeOrMore game = new ThreeOrMore();
-            game.PointTotal();
+            int Total = ThreeOrMore.PointAmounts(4,0);
+            Debug.Assert(Total == 6);
+
+
             
             
         }

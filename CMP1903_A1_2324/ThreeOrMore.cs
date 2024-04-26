@@ -40,7 +40,7 @@ namespace CMP1903_A1_2324
             return placementArray;
         }
 
-        protected static int PointAmounts(int dieNumber ,int points)
+        internal static int PointAmounts(int dieNumber ,int points)
         {
                 if (dieNumber > 3)
                 {
@@ -138,7 +138,7 @@ namespace CMP1903_A1_2324
 
         
 
-        public int[] ThreeOrMoreGame(bool player = false)
+        public int[] ThreeOrMoreGame(bool player = false,int test = 0)
         {
             int[] playerScore = { 0, 0 };
             bool endOfGame = false;
@@ -153,6 +153,27 @@ namespace CMP1903_A1_2324
             int player2RoundNumber = 0;
             while (!endOfGame)
             {
+                if (test == 0)
+                {
+                    Console.WriteLine("Player 1. ");
+                    Console.WriteLine($"You have {player1Points}. ");
+                    player1Points = player1.ThreeOrMore1Player(player1Points, true);
+                    player1RoundNumber++;
+                    if (player)
+                    {
+                        Console.WriteLine("Player 2. ");
+                        Console.WriteLine($"You have {player2Points}. ");
+                        player2Points = player2.ThreeOrMore1Player(player2Points, true);
+                        player2RoundNumber++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Computer. ");
+                        Console.WriteLine($"The computer has {player2Points}. "); ;
+                        player2Points = player2.ThreeOrMore1Player(player2Points, false);
+                        player2RoundNumber++;
+                    }
+                }
                 Console.WriteLine("Player 1. ");
                 Console.WriteLine($"You have {player1Points}. ");
                 player1Points = player1.ThreeOrMore1Player(player1Points,true);

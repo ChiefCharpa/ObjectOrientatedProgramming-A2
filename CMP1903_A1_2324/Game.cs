@@ -189,7 +189,7 @@ namespace CMP1903_A1_2324
                     }
                     else if(val == "4")
                     {
-
+                        Testing.TestCode();
                     }
                     else if (val == "x")
                     {
