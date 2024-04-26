@@ -173,27 +173,46 @@ namespace CMP1903_A1_2324
                         player2Points = player2.ThreeOrMore1Player(player2Points, false);
                         player2RoundNumber++;
                     }
+                    Console.WriteLine("Player 1. ");
+                    Console.WriteLine($"You have {player1Points}. ");
+                    player1Points = player1.ThreeOrMore1Player(player1Points, true);
+                    player1RoundNumber++;
+                    if (player)
+                    {
+                        Console.WriteLine("Player 2. ");
+                        Console.WriteLine($"You have {player2Points}. ");
+                        player2Points = player2.ThreeOrMore1Player(player2Points, true);
+                        player2RoundNumber++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Computer. ");
+                        Console.WriteLine($"The computer has {player2Points}. "); ;
+                        player2Points = player2.ThreeOrMore1Player(player2Points, false);
+                        player2RoundNumber++;
+                    }
                 }
-                Console.WriteLine("Player 1. ");
-                Console.WriteLine($"You have {player1Points}. ");
-                player1Points = player1.ThreeOrMore1Player(player1Points,true);
-                player1RoundNumber++;
-                if (player)
+
+                else if (test == 1)
                 {
-                    Console.WriteLine("Player 2. ");
-                    Console.WriteLine($"You have {player2Points}. ");
-                    player2Points = player2.ThreeOrMore1Player(player2Points, true);
-                    player2RoundNumber++;
+                    player1Points = 21;
+                    player2Points = 20;
+                }
+
+                else if (test == 2)
+                {
+                    player1Points = 24;
+                    player2Points = 19;
                 }
                 else
                 {
-                    Console.WriteLine("Computer. ");
-                    Console.WriteLine($"The computer has {player2Points}. ");;
-                    player2Points = player2.ThreeOrMore1Player(player2Points, false);
-                    player2RoundNumber++;
+                    player1Points = 6;
+                    player2Points = 22;
                 }
+                
+
                 if (player2Points >= 20 &&
-                    player1Points >=20)
+                    player1Points >= 20)
                 {
                     player1Win = true;
                     player2Win = true;

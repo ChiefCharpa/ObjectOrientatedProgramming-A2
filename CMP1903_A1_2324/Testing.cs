@@ -22,10 +22,23 @@ namespace CMP1903_A1_2324
         {
             int Total = ThreeOrMore.PointAmounts(4,0);
             Debug.Assert(Total == 6);
+            Total = ThreeOrMore.PointAmounts(5, 0);
+            Debug.Assert(Total == 12);
+            Total = ThreeOrMore.PointAmounts(3, 0);
+            Debug.Assert(Total == 3);
+            ThreeOrMore TestObject = new ThreeOrMore();
+            int[] points = TestObject.ThreeOrMoreGame(false, 1);
+            Debug.Assert(points[0] == 0);
+            points = TestObject.ThreeOrMoreGame(false, 2);
+            Debug.Assert(points[1] == 1);
+            points = TestObject.ThreeOrMoreGame(false, 3);
+            Debug.Assert(points[1] == 2);
 
 
-            
-            
+
+
+
+
         }
     }
 }   
