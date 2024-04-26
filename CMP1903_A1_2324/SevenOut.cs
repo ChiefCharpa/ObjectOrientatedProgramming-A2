@@ -28,7 +28,7 @@ namespace CMP1903_A1_2324
         */
 
 
-        public int SevenOutGame(bool player)
+        public int SevenOutGame(bool player, bool test = false, bool secondtest = false)
         {
             rollNumbers = new List<int> { };
             //Rolls 2 dice
@@ -47,9 +47,15 @@ namespace CMP1903_A1_2324
                 int DieRoll1 = rollNumber;
                 Roll();
                 int DieRoll2 = rollNumber;
-
-                Console.WriteLine($"Die pair {counter} rolled {DieRoll1} and {DieRoll2}");
-
+                if(!test)
+                {
+                    Console.WriteLine($"Die pair {counter} rolled {DieRoll1} and {DieRoll2}");
+                }
+                if(secondtest)
+                {
+                    DieRoll1 = 3;
+                    DieRoll2 = 4;
+                }
                 if (DieRoll1 + DieRoll2 != 7)
                 {
                     _storedRolls.Add(DieRoll1);
