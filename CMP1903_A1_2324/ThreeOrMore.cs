@@ -28,109 +28,138 @@ namespace CMP1903_A1_2324
         // in a and the array 
         private static int[] ComparisonCheck(int[] rolledArray)
         {
+            // placementArray is created with 6 index's set to 0
             int[] placementArray = { 0, 0, 0, 0, 0, 0 };
             for (int i = 0; i < 6; i++)
             {
                 int currentCount = 0;
                 for (int j = 0; j < 5; j++)
                 {
+                    // the current value is the index's of the current index position
                     if (i + 1 == rolledArray[j])
                     {
+                        // current count is incremented
                         currentCount++;
                     }
                 }
+                // the value is set to be the current stored count
                 placementArray[i] = currentCount;
             }
+            // the array is then returned back from the method
             return placementArray;
         }
 
+        // PointAmounts is an internal static void which takes the number of die dupicates and
+        // updates the point count accordingly
         internal static int PointAmounts(int dieNumber ,int points)
         {
+            // if the number is greater than 3 then call the next if statement
                 if (dieNumber > 3)
                 {
+                    // if the number is greater than 4 then call then the point total
+                    // is updated by 12 and 5 of a kind is returned back to the user
                     if (dieNumber > 4)
                     {
                         Console.WriteLine("5 of a kind. ");
                         points = points + 12;
                     }
+                    // the point total is updated by 6 and 4 of a kind is returned back to the user
                     else
                     {
                         Console.WriteLine("4 of a kind. ");
                         points = points + 6;
                     }
                 }
+                // the point total is updated by 3 and 3 of a kind is returned back to the user
                 else
                 {
                     Console.WriteLine("3 of a kind. ");
                     points = points + 3;
                 }
+                // the updated point total is returned back from the method
                 return points;
         }
 
-
+        // reRollDie is a private variable that takes the current value and point total and allows the
+        // user to either reroll all or the other 3 values. It then rechecks to see if there is 3 or
+        // more duplicates to then update points.
         private int reRollDie(int points , int currentValue, bool player)
         {
+            // diceAmount is initiallied as an empty array along with creating a bool variable
             int[] diceAmount = { 0, 0, 0, 0, 0, 0 };
             bool invalid = true;
             string playerChoice = "";
+            // invalid and player are true then display the roll options and store the value as player choice
             while (invalid && player)
             {
                 Console.WriteLine ("You have rolled a pair so can reroll");
                 Console.WriteLine ("1. to reroll the 3 nonmatching dice. ");
                 Console.WriteLine ("2. to reroll all dice. ");
                 playerChoice = Console.ReadLine();
+                // if the players choice is an acceptable value set invalid to false
                 if (playerChoice == "1" || playerChoice == "2")
                 {
                     invalid = false;
                 }
             }
+            // if player is not true set the first 2 index's to be the current value
             if (!player)
             {
                 Console.WriteLine("Rerolling the 3 dice. ");
                 _rolledDice[0] = currentValue;
                 _rolledDice[1] = currentValue;
+                // for i from 0 to 2 roll call the roll mthod and store it in the variable current roll
                 for (int i = 0; i < 3; i++)
                 {
                     Roll();
                     int currentRoll = rollNumber;
+                    // the current stored value is then added to the next available space in the array
                     _rolledDice[i + 2] = currentRoll;
                     Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
                 }
             }
+            // if it is a player run if statement
             else
             {
+                // if the player selected 1 then set the first 2 index's to be the current value
                 if (playerChoice == "1")
                 {
                     Console.WriteLine("Rerolling the 3 dice. ");
                     _rolledDice[0] = currentValue;
                     _rolledDice[1] = currentValue;
+                    // for i from 0 to 2 roll call the roll mthod and store it in the variable current roll
                     for (int i = 0; i < 3; i++)
                     {
                         Roll();
                         int currentRoll = rollNumber;
+                        // the current stored value is then added to the next available space in the array
                         _rolledDice[i + 2] = currentRoll;
                         Console.WriteLine($"Die {i + 1} has rolled {currentRoll}.");
                     }
                 }
+                // if the player inputs 2 then run Roll5Die
                 else
                 {
                     Roll5Die();
                 }
             }
+            // comparison check is then checked and stored in diceAmount
             diceAmount = ComparisonCheck(_rolledDice);
             for (int j = 0; j < diceAmount.Length; j++)
             {
+                // if the amount of same values is greater than 2 then call the method diceAmounts
                 if (diceAmount[j] > 2)
                 {
                     points = PointAmounts(diceAmount[j], points);
                 }
             }
-
+            // rturn the point total
             return points;
         }
-
+        // Roll5Die rolls 5 die and stores the value in _rolledDice
         private void Roll5Die()
         {
+            // for i in the range of 0 to 4 then roll the dice and store the value in _rolledDice
             for (int i = 0; i < 5; i++)
             {
                 Roll();
@@ -141,7 +170,7 @@ namespace CMP1903_A1_2324
         }
 
         
-
+        // ThreeOrMoreGame is a public 
         public int[] ThreeOrMoreGame(bool player = false,int test = 0)
         {
             int[] playerScore = { 0, 0 };
