@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,207 +13,251 @@ namespace CMP1903_A1_2324
     internal class Game
     {
         /*
-         * The Game class should create three die objects, roll them, sum and report the total of the three dice rolls.
-         *
-         * EXTRA: For extra requirements (these aren't required though), the dice rolls could be managed so that the
-         * rolls could be continous, and the totals and other statistics could be summarised for example.
+         * MenuOutput acts to display the menu options to the user upon being called
          */
-        private int[] _storedRolls = { };
 
-
-
-
-        //Methods
-
-
-        /* Mean method which can take 2 parameters (1 array and one possible bool),
-       * and process the given array to calculate and outputs the mean and median
-       */
-
-        public void Mean(int[] DiceRollArray, bool Testing = false)
+        private static void MenuOutput()
         {
-            // The function initially uses the sort function to arrange the values in acsending order
-            Array.Sort(DiceRollArray);
-            // The variables Total and Count are instantiated for later use
-            int Total = 0;
-            int Count = 0;
-            // It then iterates for each value in the array passing each given value to the vaiable DiceRoll
-            foreach (int DiceRoll in DiceRollArray)
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("1. to play SevenOut");
+            Console.WriteLine("2. to play ThreeOrMore");
+            Console.WriteLine("3. to view that stored statistics for the games");
+            Console.WriteLine("4. to run the testing class");
+            Console.WriteLine("x. to end application");
+        }
+
+
+        /*
+         * ComputerOrPlayer is a private method that acts to get the users choice for playing against 
+         * a player or computer and performs whitelist validation on the input to prevent an error 
+         * from being raised
+         */
+        private static string ComputerOrPlayer() 
+        { 
+            // Invalid is set to true and player input is set to empty
+            bool invalid = true;
+            string playerInput = "";
+            // while invalid is true the player is asked to input 1 or 2 where the input will be stored
+            while (invalid)
             {
-                // Adds the given value to The Total variable
-                Total += DiceRoll;
-                // Adds 1 to count
-                Count++;
+                Console.WriteLine("1. to play against a player");
+                Console.WriteLine("2. to play against the computer");
+                playerInput = Console.ReadLine();
+                // if the input is valid, then invalid is set to false 
+                if (playerInput == "1" || playerInput == "2")
+                {
+                    invalid = false;
+                }
+                // if the input was invalid then an error message it outputted in the console window
+                else
+                {
+                    Console.WriteLine("Input was invalid");
+                }
             }
-            // Calculates the mean by dividing the mean by the total
-            float Mean = Total / Count;
-            // Outputs the calculated mean in the console
-            Console.WriteLine($"The average mean of the dice is: {Mean}");
-            // Calculates the midpoint in the array and stores value in the variable midpoint 
-            int midpoint = Count / 2;
-            // Instantiates the variable median
-            int median;
-            // For if the midpoint is even or odd the middle most value is called
-            if (Count % 2 != 0)
+            // the users input is returned
+            return playerInput;
+        }
+
+
+        /*
+         * playerWin is a private static method that takes the players names and the array score to output the winner to the user in the console window 
+         */
+        private static void playerWin(int[] score, string player1Name, string player2Name = "Computer")
+        {
+            if (score[0] == 0)
             {
-                median = DiceRollArray[midpoint];
+                Console.WriteLine("The game was a draw. ");
+            }
+            else if(score[0] == 1) 
+            {
+                Console.WriteLine($"{player1Name} has won. ");
             }
             else
             {
-                median = DiceRollArray[midpoint - 1];
-            }
-            // Outputs the calculated median into the console window
-            Console.WriteLine($"The median of the dice is: {median}");
-            // if testing is true it validates to make sure that both mean and median are in an acceptable range
-            if (Testing)
-            {
-                Debug.Assert(median > 0 && median < 7);
-                Debug.Assert(Mean > 0 && Mean < 7);
+                Console.WriteLine($"{player2Name} has won. ");
             }
         }
 
-        /* Mode method takes 2 parameters (1 an array and one a bool variable) 
-         * and calculates the given mode for the array returning the mode from the method
-         */
-        public int Mode(int[] DiceRollArray, bool Testing = false)
+
+
+
+        /*
+        * The main class acts to output the menu and call the relevent class depending on the users choice
+        */
+        static void Main(string[] args)
         {
-            // The method initially uses the sort function to arrange the values in acsending order
-            Array.Sort(DiceRollArray);
-            // Initiallises 2 variables mode and Most
-            int mode = 0;
-            int Most = 0;
-            // Iterates through the array storing the current value as j
-            foreach (int j in DiceRollArray)
+            // an object of statistics is instantiated
+            Statistics stats = new Statistics();
+            // A bool variable is set up to run the while loop until it is set to true
+            bool end = false;
+            while (end != true)
             {
-                // instantiatescount seting it to 0
-                int count = 0;
-                // iterates through the list storing the values as i
-                foreach (int i in DiceRollArray)
+                // Calls the menu output method and stores the users input as val
+                MenuOutput();
+                string val = Console.ReadLine();
+                // whilst the input is valid
+                if (val != null)
                 {
-                    // for each instance i and j are the same, increment count
-                    if (i == j)
+                    // if the input was 1 then an instance of Seven out is made as an object
+                    if (val == "1")
                     {
-                        count++;
-                        // if count exceeds most mode is set to the current value of j and sets Most to count
-                        if (count > Most)
+                        SevenOut game = new SevenOut();
+                        // The method of ComputerOrPlayer is called and the value is stored in choice
+                        string choice = ComputerOrPlayer();
+                        // if choice is 1 then the players are both prompted to enter a name which is stored
+                        if (choice == "1")
                         {
-                            mode = j;
-                            Most = count;
+                            Console.WriteLine("Enter first players name.");
+                            string player1 = Console.ReadLine();
+                            Console.WriteLine("Enter second players name.");
+                            string player2 = Console.ReadLine();
+                            // Outputs to say it is player 1's turn and calls SevenOutGame in player mode and stores the value in player1Score
+                            Console.WriteLine($"{player1}'s Turn. ");
+                            int player1Score = game.SevenOutGame(true);
+                            // Outputs to say it is player 2's turn and calls SevenOutGame in player mode and stores the value in player2Score
+                            Console.WriteLine($"{player2}'s Turn. ");
+                            int player2Score = game.SevenOutGame(true);
+                            // Compares the players score and outputs the given winner or draw
+                            if(player1Score > player2Score)
+                            {
+                                Console.WriteLine($"{player1} wins. ");
+                                // if the value is greater than highscore a new value is set to the score and player name
+                                if (player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
+                            }
+                            else if(player2Score > player1Score)
+                            {
+                                Console.WriteLine($"{player2} wins. ");
+                                // if the value is greater than highscore a new value is set to the score and player name
+                                if (player2Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player2Score;
+                                    stats.TopPlayer = player2;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Draw. ");
+                            }
+                            // Increments the total of games played
+                            stats.GamesRan = stats.GamesRan + 1;
                         }
-                    }
-                }
-            }
-            // if testing is set to true then it tests to ensure mode is in its acceptable range
-            if (Testing)
-            {
-                Debug.Assert(mode > 0 && mode < 7);
-            }
-            // returns the value of mode 
-            return mode;
-
-        }
-
-    
-
-    // Acts to rolls dice 3 at a time until the user stops the rolling
-        public void RollingContinuous(bool val, bool testRun = false)
-        {
-            // Takes the first boolean parameter and whilst Val is true iterate the while loop
-            while (val == true)
-            {
-                // Creates instance of the die class
-                Die die1 = new Die();
-                // calls the roll method Roll for the Die class for the instance
-                die1.Roll();
-                // The stored variable is called and its value is stored in the DieRoll variable
-                int DieRoll = die1.rollNumber;
-                // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls = _storedRolls.Append(DieRoll).ToArray();
-                // Outputs the current dice number with the dices curtrent value
-                Console.WriteLine();
-                Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
-                /*
-                    for (int i = 0; i < 3; i++) 
-                    {
-                        die.Roll();
-                        int DieRoll = die.RollNumber;
-                        storedRolls = storedRolls.Append(DieRoll).ToArray();
-                        Console.WriteLine();
-                        Console.WriteLine($"Dice {storedRolls.Count()} rolled a {DieRoll}");
-                    }
-                */
-                // Creates instance of the die class
-                Die die2 = new Die();
-                // calls the roll method Roll for the Die class for the instance
-                die2.Roll();
-                // The stored variable is called and its value is stored in the DieRoll variable
-                DieRoll = die2.rollNumber;
-                // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls = _storedRolls.Append(DieRoll).ToArray();
-                // Outputs the current dice number with the dices curtrent value
-                Console.WriteLine();
-                Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
-                // Creates instance of the die class
-                Die die3 = new Die();
-                // calls the roll method Roll for the Die class for the instance
-                die3.Roll();
-                // The stored variable is called and its value is stored in the DieRoll variable
-                DieRoll = die3.rollNumber;
-                // The value stored in DieRoll is appended to the array storedRolls
-                _storedRolls = _storedRolls.Append(DieRoll).ToArray();
-                // Outputs the current dice number with the dices curtrent value
-                Console.WriteLine();
-                Console.WriteLine($"Dice {_storedRolls.Count()} rolled a {DieRoll}");
-
-                // instantiates a variable to store the total of the dice
-                int Total = 0;
-                // iterates through the list adding each roll stored to the total variable
-                foreach (int previousRoll in _storedRolls)
-                {
-                    Total = Total + previousRoll;
-                }
-                // Ouputs the total of the dice in the command console
-                Console.WriteLine();
-                Console.WriteLine($"The current total of the dice is: {Total}");
-                Console.WriteLine();
-                // checks to see if the method is being called in test mode and setting the loop to end accordingly
-                if (testRun)
-                {
-                    val = false;
-                }
-                else
-                {
-                    // if not in test mode the method Mean is called passing the array of stored rolls as a parameter
-                    Mean(_storedRolls);
-                    // The method mode is then called passing the stored array and outputting the result in the console window
-                    Console.WriteLine($"The current mode of the dice is: {Mode(_storedRolls)}");
-                    Console.WriteLine();
-                    // An output is produced in the console asking if they want to roll 3 more dice
-                    Console.WriteLine("Do you want to roll 3 more dice: X to quit");
-                    //try is then used to ensure no errors are produced by the users input
-                    try
-                    {
-                        // The console reads the users input and attempts to store the value as a string  in InputtedValue
-                        string InputtedValue = Console.ReadLine();
-                        // If the inputed value is an x Val is set to false ending the while loop 
-                        if (InputtedValue == "x" || InputtedValue == "X")
-                        {
-                            val = false;
-                            // A final message is produced in the command window to signify the end of the program
-                            Console.WriteLine("Program end.");
-                        }
+                        // if choice is 2 then the player is prompted to enter a name which is stored
                         else
                         {
-                            throw new Exception();
+                            Console.WriteLine("Enter player's name.");
+                            string player1 = Console.ReadLine();
+                            // Outputs to say it is player 1's turn and calls SevenOutGame in player mode and stores the value in player1Score
+                            Console.WriteLine($"{player1}'s Turn. ");
+                            int player1Score = game.SevenOutGame(true);
+                            // Outputs to say it is the computer's turn and calls SevenOutGame in computer mode and stores the value in player2Score
+                            Console.WriteLine($"computer's Turn. ");
+                            int player2Score = game.SevenOutGame(false);
+                            // Compares the players score and outputs the given winner or draw
+                            if (player1Score > player2Score)
+                            {
+                                Console.WriteLine($"{player1} wins. ");
+                                // if the value is greater than highscore a new value is set to the score and player name
+                                if (player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
+                            }
+                            else if (player2Score > player1Score)
+                            {
+                                Console.WriteLine($"Computer wins. ");
+                                stats.ComputerWins = stats.ComputerWins + 1;
+                                if (player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Draw. ");
+                                if (player1Score > stats.Highscore)
+                                {
+                                    stats.Highscore = player1Score;
+                                    stats.TopPlayer = player1;
+                                }
+                            }
+                            // Increments the total of games played
+                            stats.GamesRan = stats.GamesRan + 1;
                         }
-                    //if inputted value was invalid or not x the program will roll 3 more dice
+
                     }
-                    catch (Exception)
+                    // if the input was 1 then an instance of ThreeOrMore is made as an object
+                    else if (val == "2")
                     {
-                        Console.WriteLine("X has not been inputted, rolling 3 more dice. ");
+                        // The method of ComputerOrPlayer is called and the value is stored in choice
+                        string choice = ComputerOrPlayer();
+                        ThreeOrMore game = new ThreeOrMore();
+                        // if choice is 1 then the players are both prompted to enter a name which is stored
+                        if (choice == "1")
+                        {
+                            Console.WriteLine("Enter first players name.");
+                            string player1 = Console.ReadLine();
+                            Console.WriteLine("Enter second players name.");
+                            string player2 = Console.ReadLine();
+                            // The method ThreeOrMoreGame is called in 2 player mode
+                            int[] outcome = game.ThreeOrMoreGame(true);
+                            // Games ran is incremented
+                            stats.GamesRan = stats.GamesRan + 1;
+                            // playerWin is called passing the array and 2 players names
+                            playerWin(outcome, player1, player2);
+                        }
+                        // if choice is 2 then the player is prompted to enter a name which is stored
+                        else
+                        {
+                            Console.WriteLine("Enter first players name.");
+                            string player1 = Console.ReadLine();
+                            // The method ThreeOrMoreGame is called in 2 player mode
+                            int[] outcome = game.ThreeOrMoreGame(false);
+                            // Games ran is incremented
+                            stats.GamesRan = stats.GamesRan + 1;
+                            // playerWin is called passing the array and players name
+                            playerWin(outcome, player1);
+                        }
+
                     }
+                    // if val is 3 then call the method display stats
+                    else if (val == "3")
+                    {
+                        stats.DisplayStats();
+                    }
+                    // if val is 4 then call method TestCode
+                    else if(val == "4")
+                    {
+                        Testing.TestCode();
+                    }
+                    // if value is x then set end to be true
+                    else if (val == "x")
+                    {
+                        end = true;
+                    }
+                    // output error for invalid input
+                    else
+                    {
+                        Console.WriteLine("Invalid input. ");
+                    }
+
+                }
+                // output error for input entered
+                // output error for input entered
+                else
+                {
+                    Console.WriteLine("No input was entered. ");
                 }
             }
+
+
+
         }
 
     }
