@@ -23,9 +23,14 @@ namespace CMP1903_A1_2324
             First to a total of 20.
         */
 
-        // Comparison check is a private static method that acts to take a fixed array and ensure
-        // that for the 5 rolled values each amount of numbers of 1 - 6 are stored in a separate array
-        // in a and the array 
+         
+        /// <summary>
+        /// Comparison check is a private static method that acts to take a fixed array and ensure
+        /// that for the 5 rolled values each amount of numbers of 1 - 6 are stored in a separate array
+        /// in a and the array
+        /// </summary>
+        /// <param name="rolledArray"></param>
+        /// <returns></returns>
         private static int[] ComparisonCheck(int[] rolledArray)
         {
             // placementArray is created with 6 index's set to 0
@@ -49,8 +54,13 @@ namespace CMP1903_A1_2324
             return placementArray;
         }
 
-        // PointAmounts is an internal static void which takes the number of die dupicates and
-        // updates the point count accordingly
+        /// <summary>
+        ///  PointAmounts is an internal static void which takes the number of die dupicates and
+        ///  updates the point count accordingly
+        /// </summary>
+        /// <param name="dieNumber"></param>
+        /// <param name="points"></param>
+        /// <returns></returns>
         internal static int PointAmounts(int dieNumber ,int points)
         {
             // if the number is greater than 3 then call the next if statement
@@ -80,9 +90,17 @@ namespace CMP1903_A1_2324
                 return points;
         }
 
-        // reRollDie is a private variable that takes the current value and point total and allows the
-        // user to either reroll all or the other 3 values. It then rechecks to see if there is 3 or
-        // more duplicates to then update points.
+
+        /// <summary>
+        /// reRollDie is a private variable that takes the current value and point total and allows the
+        /// user to either reroll all or the other 3 values. It then rechecks to see if there is 3 or
+        /// more duplicates to then update points.
+        /// </summary>
+        /// <param name="points"></param>
+        /// <param name="currentValue"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        
         private int reRollDie(int points , int currentValue, bool player)
         {
             // diceAmount is initiallied as an empty array along with creating a bool variable
@@ -169,10 +187,14 @@ namespace CMP1903_A1_2324
             }
         }
 
-        
-        // ThreeOrMoreGame is a public method which acts to call the seperate method for each
-        // turn and stores the score. The scores are then compared and if 1 or more players
-        // are over 20 the game ends and returns if player 1, 2 or both have won
+        /// <summary>
+        /// ThreeOrMoreGame is a public method which acts to call the seperate method for each
+        /// turn and stores the score. The scores are then compared and if 1 or more players
+        /// are over 20 the game ends and returns if player 1, 2 or both have won
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="test"></param>
+        /// <returns></returns>
         public int[] ThreeOrMoreGame(bool player = false,int test = 0)
         {
             // the array playerScore is set to have 2 index's
@@ -279,9 +301,14 @@ namespace CMP1903_A1_2324
             return playerScore;
         }
 
-
-        // ThreeOrMore1Player is a public method which calls the roll5 method and calls the comparisoncheck if the value.
-        // If the value is greater than 2 call PointsAmounts or if the value is 2 then call reroll die.
+        /// <summary>
+        /// ThreeOrMore1Player is a public method which calls the roll5 method and calls the comparisoncheck if the value.
+        /// If the value is greater than 2 call PointsAmounts or if the value is 2 then call reroll die.
+        /// </summary>
+        /// <param name="points"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        
         public int ThreeOrMore1Player(int points , bool player = false)
         {
             if (player)

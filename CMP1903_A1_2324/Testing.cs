@@ -17,7 +17,9 @@ namespace CMP1903_A1_2324
          * Use debug.assert() to make the comparisons and tests.
          */
 
-        //Method
+        /// <summary>
+        /// A Method to test the 2 game type classes to ensure they produce the desired output
+        /// </summary>
         public static void TestCode()
         {
             // Passes the amount of die rolls that were the same and the current point total of 0

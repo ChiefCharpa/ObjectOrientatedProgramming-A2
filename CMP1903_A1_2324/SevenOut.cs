@@ -28,7 +28,16 @@ namespace CMP1903_A1_2324
                     If it is a double - add double the total to your score(3,3 would add 12 to your total)
         */
 
-
+        /// <summary>
+        /// SevenOutGame is a public method that will call the inherited roll method from the die class and
+        /// if the two rolled numbers dont add up to 7 they will be added to a point total. If the 2 values
+        /// are the same then the value of the points is doubled and then added. Once the value totals to 7
+        /// from the two rolls then the game ends and the total is returned.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="test"></param>
+        /// <param name="secondtest"></param>
+        /// <returns></returns>
         public int SevenOutGame(bool player, bool test = false, bool secondtest = false)
         {
             // rolledNumbers is called to set _storedRolls

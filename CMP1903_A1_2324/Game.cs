@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -12,10 +13,10 @@ namespace CMP1903_A1_2324
 {
     internal class Game
     {
-        /*
-         * MenuOutput acts to display the menu options to the user upon being called
-         */
-
+        /// <summary>
+        /// MenuOutput acts to display the menu options to the user upon being called
+        /// </summary>
+        
         private static void MenuOutput()
         {
             Console.WriteLine();
@@ -28,11 +29,13 @@ namespace CMP1903_A1_2324
         }
 
 
-        /*
-         * ComputerOrPlayer is a private method that acts to get the users choice for playing against 
-         * a player or computer and performs whitelist validation on the input to prevent an error 
-         * from being raised
-         */
+
+         /// <summary>
+         /// ComputerOrPlayer is a private method that acts to get the users choice for playing against 
+         /// a player or computer and performs whitelist validation on the input to prevent an error
+         /// from being raised
+         /// </summary>
+         /// <returns></returns>
         private static string ComputerOrPlayer() 
         { 
             // Invalid is set to true and player input is set to empty
@@ -60,9 +63,13 @@ namespace CMP1903_A1_2324
         }
 
 
-        /*
-         * playerWin is a private static method that takes the players names and the array score to output the winner to the user in the console window 
-         */
+        
+        /// <summary>
+        /// playerWin is a private static method that takes the players names and the array score to output the winner to the user in the console window 
+        /// </summary>
+        /// <param name="score"></param>
+        /// <param name="player1Name"></param>
+        /// <param name="player2Name"></param>
         private static void playerWin(int[] score, string player1Name, string player2Name = "Computer")
         {
             if (score[0] == 0)

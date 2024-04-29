@@ -31,10 +31,10 @@ namespace CMP1903_A1_2324
 
             //Method
 
-            /*
-             * Roll is the method that will take no parameters and will roll 1 dice using random,
-             * and will use the setter to store the given value in the private property
-             */
+            /// <summary>
+            /// Roll is the method that will take no parameters and will roll 1 dice using random,
+            /// and will use the setter to store the given value in the private property
+            /// </summary>
 
             public void Roll()
             {
