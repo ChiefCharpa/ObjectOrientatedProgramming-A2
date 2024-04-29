@@ -170,116 +170,118 @@ namespace CMP1903_A1_2324
         }
 
         
-        // ThreeOrMoreGame is a public 
+        // ThreeOrMoreGame is a public method which acts to call the seperate method for each
+        // turn and stores the score. The scores are then compared and if 1 or more players
+        // are over 20 the game ends and returns if player 1, 2 or both have won
         public int[] ThreeOrMoreGame(bool player = false,int test = 0)
         {
+            // the array playerScore is set to have 2 index's
             int[] playerScore = { 0, 0 };
             bool endOfGame = false;
-
+            // 2 game objects are creared for each of the players turns
             ThreeOrMore player1 = new ThreeOrMore();
             ThreeOrMore player2 = new ThreeOrMore();
+            // player1Win and player2Win are set to false
             bool player1Win = false;
             bool player2Win = false;
             int player1Points = 0; 
             int player2Points = 0;
             int player1RoundNumber = 0;
             int player2RoundNumber = 0;
+            // while endOfGame run the if test is 0 call the specified information
             while (!endOfGame)
             {
                 if (test == 0)
                 {
+                    // player 1 turn is outputted and threeOrMore1Player is called in player mode
                     Console.WriteLine("Player 1. ");
                     Console.WriteLine($"You have {player1Points}. ");
                     player1Points = player1.ThreeOrMore1Player(player1Points, true);
+                    // player1RoundNumber is incremented
                     player1RoundNumber++;
+                    // if player is true player 2 turn is outputted and threeOrMore1Player is called in player mode
                     if (player)
                     {
                         Console.WriteLine("Player 2. ");
                         Console.WriteLine($"You have {player2Points}. ");
                         player2Points = player2.ThreeOrMore1Player(player2Points, true);
+                        // player1RoundNumber is incremented
                         player2RoundNumber++;
                     }
+                    // if player is true Computer turn is outputted and threeOrMore1Player is called in computer mode
                     else
                     {
                         Console.WriteLine("Computer. ");
                         Console.WriteLine($"The computer has {player2Points}. "); ;
                         player2Points = player2.ThreeOrMore1Player(player2Points, false);
-                        player2RoundNumber++;
-                    }
-                    Console.WriteLine("Player 1. ");
-                    Console.WriteLine($"You have {player1Points}. ");
-                    player1Points = player1.ThreeOrMore1Player(player1Points, true);
-                    player1RoundNumber++;
-                    if (player)
-                    {
-                        Console.WriteLine("Player 2. ");
-                        Console.WriteLine($"You have {player2Points}. ");
-                        player2Points = player2.ThreeOrMore1Player(player2Points, true);
-                        player2RoundNumber++;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Computer. ");
-                        Console.WriteLine($"The computer has {player2Points}. "); ;
-                        player2Points = player2.ThreeOrMore1Player(player2Points, false);
+                        // player1RoundNumber is incremented
                         player2RoundNumber++;
                     }
                 }
-
+                // if test mode 1 set player1 and 2's points accordingly
                 else if (test == 1)
                 {
                     player1Points = 21;
                     player2Points = 20;
                 }
-
+                // if test mode 2 set player1 and 2's points accordingly
                 else if (test == 2)
                 {
                     player1Points = 24;
                     player2Points = 19;
                 }
+                // if test mode 3 set player1 and 2's points accordingly
                 else
                 {
                     player1Points = 6;
                     player2Points = 22;
                 }
                 
-
-                if (player2Points >= 20 &&
-                    player1Points >= 20)
+                // if player1Points and player2Points are above or equal to 20, player 1 and 2 win is set to true along with end game
+                if (player2Points >= 20 && player1Points >= 20)
                 {
                     player1Win = true;
                     player2Win = true;
                     endOfGame = true;
                 }
+                // if player1Points is above or equal to 20, player 1 is set to true along with end game
                 if (player2Points >= 20)
                 {
                     player2Win = true;
                     endOfGame = true;
                 }
+                // if player2Points is above or equal to 20, player 2 is set to true along with end game
                 if (player1Points >= 20)
                 {
                     player1Win = true;
                     endOfGame = true;
                 }
             }
+            // if player1 and player 2 are set to true set index 0 to 0 to show draw and the second index to be the round count
             if (player1Win && player2Win)
             {
                 playerScore[0] = 0;
                 playerScore[1] = player1RoundNumber;
             }
+            // if player1 is set to true set index 0 to 1 to show player 1 win and the second index to be the round count
             else if (player1Win)
             {
                 playerScore[0] = 1;
                 playerScore[1] = player1RoundNumber;
             }
+            // if player2 is set to true set index 0 to 2 to show player 1 win and the second index to be the round count
             else
             {
                 playerScore[0] = 2;
                 playerScore[1] = player2RoundNumber;
             }
+            // return playerScore
             return playerScore;
         }
 
+
+        // ThreeOrMore1Player is a public method which calls the roll5 method and calls the comparisoncheck if the value.
+        // If the value is greater than 2 call PointsAmounts or if the value is 2 then call reroll die.
         public int ThreeOrMore1Player(int points , bool player = false)
         {
             if (player)
@@ -309,8 +311,10 @@ namespace CMP1903_A1_2324
                     }
                 }
             }
+            // if reroll is true and valid roll is false then pass to if statement
             if ( reRoll && !validRoll)
             {
+                // if player is true call reRollDie method in player mode otherwise its in non player mode
                 if(player == true)
                 {
                     points = reRollDie(points, currentDuplicate + 1, true);
@@ -320,6 +324,7 @@ namespace CMP1903_A1_2324
                     points = reRollDie(points, currentDuplicate + 1, false);
                 }
             }
+            // returns the players point total.
             return points;
         }
     }
