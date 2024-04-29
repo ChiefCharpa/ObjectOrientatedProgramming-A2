@@ -22,6 +22,10 @@ namespace CMP1903_A1_2324
 	        5-of-a-kind: 12 points
             First to a total of 20.
         */
+
+        // Comparison check is a private static method that acts to take a fixed array and ensure
+        // that for the 5 rolled values each amount of numbers of 1 - 6 are stored in a separate array
+        // in a and the array 
         private static int[] ComparisonCheck(int[] rolledArray)
         {
             int[] placementArray = { 0, 0, 0, 0, 0, 0 };
